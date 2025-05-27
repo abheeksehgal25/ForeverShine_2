@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PersonalCare from './images/Property 1=Group 8.jpg'
 import HomeCare from './images/Property 1=Component 7.jpg'
@@ -9,9 +9,11 @@ import DashboardPolish from './images/DashBoardPolish.webp'
 import TyrePolish from './images/TyrePolish.webp'
 import CarwashShampoo from './images/CarWashShampoo.webp'
 import Forevershine from './images/ForeverShine.jpg'
+import ForevershineMobile from './images/ForeverShine_imresizer.jpg'
 import Blog1 from './images/Blog1.jpg'
 import Blog2 from './images/Blog2.jpg'
 import Blog3 from './images/Blog3.jpg'
+import { useCart } from './context/CartContext';
 
 const categories = [
   {
@@ -83,6 +85,27 @@ const bestSellers = [
 ];
 
 export default function HomeSections() {
+  const { addToCart } = useCart();
+  const [addingToCart, setAddingToCart] = useState({});
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const handleAddToCart = (prod, category) => {
+    setAddingToCart(prev => ({ ...prev, [prod.id]: true }));
+    addToCart({...prod, category}, 1);
+    setTimeout(() => {
+      setAddingToCart(prev => ({ ...prev, [prod.id]: false }));
+    }, 1000);
+  };
+
   return (
     <>
     <div className="max-w-6xl mx-auto px-4 md:px-0 py-8 md:py-12">
@@ -107,22 +130,30 @@ export default function HomeSections() {
       <h3 className="text-2xl md:text-3xl font-bold text-red-700 mb-4 md:mb-6 tracking-tight drop-shadow">Best Seller Deal</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-8 md:mb-12">
         {bestSellers.map((prod, idx) => (
-          <Link 
-            key={idx} 
-            to={`/product/${prod.id}`}
-            className="flex flex-col items-start w-full bg-white shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out p-4 transform hover:-translate-y-2 cursor-pointer"
-          >
-            <img src={prod.image} alt={prod.name} className="w-full h-48 md:h-56 object-cover mb-3 shadow" />
-            <span className="text-base md:text-lg font-semibold text-gray-800 mb-1">{prod.name}</span>
-            <div className="flex items-sart justify-between w-full mt-1">
-              <span className="text-sm md:text-base font-bold text-teal-700">{prod.price}</span>
-             
-            </div>
-            <button className="w-full text-white bg-teal-700 hover:bg-teal-800 rounded-full p-2 shadow transition-colors duration-200 ml-2">
-             
-                 <span className="text-sm md:text-base font-medium">ADD TO CART</span>
-              </button> 
-          </Link>
+          <div key={idx} className="flex flex-col items-start w-full bg-white shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out p-4 transform hover:-translate-y-2">
+            <Link to={`/product/${prod.id}`} className="w-full">
+              <img src={prod.image} alt={prod.name} className="w-full h-48 md:h-56 object-cover mb-3 shadow" />
+              <span className="text-base md:text-lg font-semibold text-gray-800 mb-1">{prod.name}</span>
+              <div className="flex items-start justify-between w-full mt-1">
+                <span className="text-sm md:text-base font-bold text-teal-700">{prod.price}</span>
+              </div>
+            </Link>
+            <button 
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleAddToCart(prod, 'Best Seller');
+              }}
+              className={`w-full text-white rounded-full p-2 shadow transition-colors duration-200 mt-2 ${
+                addingToCart[prod.id] ? 'bg-green-600' : 'bg-teal-700 hover:bg-teal-800'
+              }`}
+              disabled={addingToCart[prod.id]}
+            >
+              <span className="text-sm md:text-base font-medium">
+                {addingToCart[prod.id] ? '✓ Added to Cart' : 'ADD TO CART'}
+              </span>
+            </button>
+          </div>
         ))}
       </div>
 
@@ -130,69 +161,77 @@ export default function HomeSections() {
       <h3 className="text-2xl md:text-3xl font-bold text-red-700 mb-4 md:mb-6 tracking-tight drop-shadow">New Arrivals</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-8 md:mb-12">
         {newArrivals.map((prod, idx) => (
-          <Link 
-            key={idx} 
-            to={`/product/${prod.id}`}
-            className="flex flex-col items-center w-full bg-white shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out p-4 transform hover:-translate-y-2 cursor-pointer"
-          >
-            <img src={prod.image} alt={prod.name} className="w-full h-48 md:h-56 object-cover  mb-3 shadow" />
-            <span className="text-base md:text-lg font-semibold text-gray-800 mb-1">{prod.name}</span>
-            <div className="flex items-center justify-between w-full mt-1">
-              <span className="text-sm md:text-base font-bold text-teal-700">{prod.price}</span>
-              
-            </div>
-            <button className="w-full text-white bg-teal-700 hover:bg-teal-800 rounded-full p-2 shadow transition-colors duration-200 ml-2">
-                <span className="text-sm md:text-base font-medium">ADD TO CART</span>
-              </button>
-          </Link>
+          <div key={idx} className="flex flex-col items-center w-full bg-white shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out p-4 transform hover:-translate-y-2">
+            <Link to={`/product/${prod.id}`} className="w-full">
+              <img src={prod.image} alt={prod.name} className="w-full h-48 md:h-56 object-cover mb-3 shadow" />
+              <span className="text-base md:text-lg font-semibold text-gray-800 mb-1">{prod.name}</span>
+              <div className="flex items-start justify-between w-full mt-1">
+                <span className="text-sm md:text-base font-bold text-teal-700">{prod.price}</span>
+              </div>
+            </Link>
+            <button 
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleAddToCart(prod, 'New Arrival');
+              }}
+              className={`w-full text-white rounded-full p-2 shadow transition-colors duration-200 mt-2 ${
+                addingToCart[prod.id] ? 'bg-green-600' : 'bg-teal-700 hover:bg-teal-800'
+              }`}
+              disabled={addingToCart[prod.id]}
+            >
+              <span className="text-sm md:text-base font-medium">
+                {addingToCart[prod.id] ? '✓ Added to Cart' : 'ADD TO CART'}
+              </span>
+            </button>
+          </div>
         ))}
       </div>
       
       {/* Forevershine Banner Section - Full Width */}
       <div className="relative w-full h-[20rem] md:h-[35rem] overflow-hidden mt-8 flex items-center justify-center animate-fadeInUp">
-      <img 
-      src={Forevershine} 
-      alt="Forever Shine" 
-      className="absolute inset-0 w-full h-full object-cover object-center bg-white" 
-     />
+        <img 
+          src={isMobile ? ForevershineMobile : Forevershine} 
+          alt="Forever Shine" 
+          className="absolute inset-0 w-full h-full object-cover object-center bg-white" 
+        />
       </div>
 
       {/* Services Section */}
       <div className="w-full bg-white py-8 md:py-14 shadow-inner rounded-t-3xl">
         <div className="max-w-6xl mx-auto px-4 md:px-0">
           <h2 className="text-3xl md:text-4xl font-extrabold mb-6 md:mb-10 text-left tracking-tight text-gray-900 drop-shadow">Services</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 text-center">
-            <div>
-              <div className="font-bold text-xl md:text-2xl mb-2 justify-cenetr">
-                <div className='services-icon mb-1 flex justify-center items-center'><img src='https://icon-library.com/images/free-shipping-icon-vector/free-shipping-icon-vector-6.jpg'  className='shadow-xl border-4 border-gray-100 hover:scale-105 hover:shadow-2xl transition-all duration-300'/></div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 text-center items-center">
+            <div className="flex flex-col items-center">
+              <div className='services-icon mb-2 flex justify-center items-center'><img src='https://icon-library.com/images/free-shipping-icon-vector/free-shipping-icon-vector-6.jpg'  className='shadow-xl border-4 border-gray-100 hover:scale-105 hover:shadow-2xl transition-all duration-300'/></div>
+              <div className="font-bold text-xl md:text-2xl mb-1">
                 <span className="text-[#3422FF]">Free</span>
                 <span className="text-black"> Shipping</span>
               </div>
-              
               <div className="text-base md:text-lg text-gray-800">Free shipping on all US order or above $200</div>
             </div>
-            <div>
+            <div className="flex flex-col items-center">
               
-              <div className="font-bold text-xl md:text-2xl mb-2">
-                <div className='services-icon font-bold text-xl md:text-2xl mb-2'><img src='https://img.freepik.com/premium-vector/24x7-service-logo-design-everyday-vector-file_389740-725.jpg'  className='shadow-xl border-4 border-gray-100 hover:scale-105 hover:shadow-2xl transition-all duration-300'/></div>
+              <div className='services-icon mb-2 flex justify-center items-center'><img src='https://img.freepik.com/premium-vector/24x7-service-logo-design-everyday-vector-file_389740-725.jpg'  className='shadow-xl border-4 border-gray-100 hover:scale-105 hover:shadow-2xl transition-all duration-300'/></div>
+              <div className="font-bold text-xl md:text-2xl mb-1">
                 <span className="text-[#3422FF]">24x7</span>
                 <span className="text-black"> Support</span>
               </div>
               <div className="text-base md:text-lg text-gray-800">Contact us 24 hours a day, 7 days a week</div>
             </div>
-            <div>
+            <div className="flex flex-col items-center">
              
-              <div className="font-bold text-xl md:text-2xl mb-2">
-                 <div className='services-icon font-bold text-xl md:text-2xl mb-2'><img src='https://thumbs.dreamstime.com/b/flat-line-design-concept-icon-purchase-returns-support-delivery-process-online-order-procedure-website-banner-landing-page-120718997.jpg'  className='shadow-xl border-4 border-gray-100 hover:scale-105 hover:shadow-2xl transition-all duration-300'/></div>
-                <span className="text-[#3422FF]">30 days</span>
+              <div className='services-icon mb-2 flex justify-center items-center'><img src='https://thumbs.dreamstime.com/b/flat-line-design-concept-icon-purchase-returns-support-delivery-process-online-order-procedure-website-banner-landing-page-120718997.jpg'  className='shadow-xl border-4 border-gray-100 hover:scale-105 hover:shadow-2xl transition-all duration-300'/></div>
+              <div className="font-bold text-xl md:text-2xl mb-1">
+                 <span className="text-[#3422FF]">30 days</span>
                 <span className="text-black"> Return</span>
               </div>
               <div className="text-base md:text-lg text-gray-800">Simply return it within 30 days for an exchange</div>
             </div>
-            <div>
+            <div className="flex flex-col items-center">
               
-              <div className="font-bold text-xl md:text-2xl mb-2">
-                <div className='services-icon font-bold text-xl md:text-2xl mb-2'><img src='https://logowik.com/content/uploads/images/secure-payment2785.jpg' className='shadow-xl border-4 border-gray-100 hover:scale-105 hover:shadow-2xl transition-all duration-300'/></div>
+              <div className='services-icon mb-2 flex justify-center items-center'><img src='https://logowik.com/content/uploads/images/secure-payment2785.jpg' className='shadow-xl border-4 border-gray-100 hover:scale-105 hover:shadow-2xl transition-all duration-300'/></div>
+              <div className="font-bold text-xl md:text-2xl mb-1">
                 <span className="text-[#3422FF]">Payment Secure</span>
               </div>
 

@@ -2,15 +2,25 @@ import React, { useState, useEffect } from 'react';
 import CarCare from './images/Property 1=car.jpg';
 import HomeCare from './images/Property 1=home.jpg';
 import PersonalCare from './images/Property 1=personal.jpg';
+import CarCareMobile from './images/Property 1=car_imresizer.jpg';
+import HomeCareMobile from './images/Property 1=home_imresizer.jpg';
+import PersonalCareMobile from './images/Property 1=personal_imresizer.jpg';
+
 const slides = [
   {
-    image: CarCare,
+    desktopImage: CarCare,
+    mobileImage: CarCareMobile,
+    title: 'Car Care'
   },
   {
-    image: HomeCare,
+    desktopImage: HomeCare,
+    mobileImage: HomeCareMobile,
+    title: 'Home Care'
   },  
   {
-    image: PersonalCare,
+    desktopImage: PersonalCare,
+    mobileImage: PersonalCareMobile,
+    title: 'Personal Care'
   },
 ];
 
@@ -18,6 +28,16 @@ export default function Slider() {
   const [current, setCurrent] = useState(0);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const goToSlide = (idx) => setCurrent(idx);
   const nextSlide = () => setCurrent((prev) => (prev + 1) % slides.length);
@@ -70,9 +90,9 @@ export default function Slider() {
           <div className="relative w-full h-full flex items-center justify-center p-4 md:p-0">
             <div className="relative w-full h-full">
               <img 
-                src={slide.image} 
+                src={isMobile ? slide.mobileImage : slide.desktopImage} 
                 alt={slide.title} 
-                className="w-full h-full object-contain md:object-cover object-center bg-white shadow-xl rounded-2xl transition-all duration-700" 
+                className="w-full h-full object-cover object-center bg-white shadow-xl rounded-2xl transition-all duration-700" 
                 loading="lazy"
               />
             </div>

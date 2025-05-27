@@ -264,10 +264,13 @@ export default function Navbar() {
             <ShareIcon className="w-5 h-5 md:w-6 md:h-6 align-middle" />
           </button>
 
-          <Link to="/cart" className="flex items-center justify-center hover:text-teal-700 hover:bg-teal-200/60 rounded-full p-2 transition-all duration-200 shadow-sm bg-transparent relative">
+          <Link 
+            to="/cart"
+            className="flex items-center justify-center hover:text-teal-700 hover:bg-teal-200/60 rounded-full p-2 transition-all duration-200 shadow-sm relative"
+          >
             <ShoppingCartIcon className="w-5 h-5 md:w-6 md:h-6 align-middle" />
             {cartCount > 0 && (
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+              <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                 {cartCount}
               </span>
             )}
