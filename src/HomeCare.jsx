@@ -37,12 +37,12 @@ export default function HomeCare() {
       <h1 className="text-4xl font-extrabold mb-8 text-center tracking-tight text-gray-900 drop-shadow">Home Care Products</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {products.map((product, index) => (
-          <div key={index} className="flex flex-col items-center bg-white shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out p-4 transform hover:-translate-y-2">
+          <div key={index} className="flex flex-col items-start w-full bg-white shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out p-4 transform hover:-translate-y-2">
             <Link to={`/product/${product.id}`} className="w-full">
-              <img src={product.image} alt={product.name} className="w-56 h-56 object-cover mb-3 shadow" />
-              <span className="text-lg font-semibold text-gray-800 mb-1">{product.name}</span>
-              <div className="flex items-center justify-between w-full mt-1">
-                <span className="text-base font-bold text-teal-700">{product.price}</span>
+              <img src={product.image} alt={product.name} className="w-full h-48 md:h-56 object-cover mb-3 shadow" />
+              <span className="text-base md:text-lg font-semibold text-gray-800 mb-1">{product.name}</span>
+              <div className="flex items-start justify-between w-full mt-1">
+                <span className="text-sm md:text-base font-bold text-teal-700">{product.price}</span>
               </div>
             </Link>
             <button 
