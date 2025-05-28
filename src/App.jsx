@@ -15,6 +15,7 @@ import Account from './Account'
 import SearchResults from './SearchResults'
 import { CartProvider } from './context/CartContext'
 import { SearchProvider } from './context/SearchContext'
+import ScrollToTop from './components/ScrollToTop'
 
 // Footer Pages
 const Contact = () => (
@@ -71,6 +72,7 @@ function App() {
     <CartProvider>
       <SearchProvider>
         <BrowserRouter>
+          <ScrollToTop />
           <ChatBot />
           <Routes>
             <Route path="/" element={
