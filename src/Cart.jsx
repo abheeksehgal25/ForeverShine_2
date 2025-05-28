@@ -30,10 +30,10 @@ export default function Cart() {
         <div className="lg:col-span-2">
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
             {cart.map((item) => (
-              <div key={item.id} className="p-6 border-b border-gray-200 last:border-b-0">
-                <div className="flex items-center gap-6">
+              <div key={item.id} className="p-4 sm:p-6 border-b border-gray-200 last:border-b-0">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
                   {/* Product Image */}
-                  <div className="w-24 h-24 flex-shrink-0">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0">
                     <img
                       src={item.image}
                       alt={item.name}
@@ -42,25 +42,25 @@ export default function Cart() {
                   </div>
                   
                   {/* Product Info */}
-                  <div className="flex-grow">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-1">{item.name}</h3>
+                  <div className="flex-grow min-w-0">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-1 truncate">{item.name}</h3>
                     <p className="text-sm text-gray-500 mb-2">{item.category}</p>
-                    <p className="text-lg font-bold text-teal-700">{item.price}</p>
+                    <p className="text-base font-bold text-teal-700">{item.price}</p>
                   </div>
 
-                  {/* Quantity Controls */}
-                  <div className="flex items-center gap-4">
+                  {/* Quantity Controls and Remove Button */}
+                  <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto justify-between sm:justify-end">
                     <div className="flex items-center border border-gray-300 rounded-lg">
                       <button
                         onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                        className="px-3 py-1 text-gray-600 hover:bg-gray-100"
+                        className="px-2 sm:px-3 py-1 text-gray-600 hover:bg-gray-100"
                       >
                         -
                       </button>
-                      <span className="px-3 py-1 text-gray-900">{item.quantity}</span>
+                      <span className="px-2 sm:px-3 py-1 text-gray-900">{item.quantity}</span>
                       <button
                         onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                        className="px-3 py-1 text-gray-600 hover:bg-gray-100"
+                        className="px-2 sm:px-3 py-1 text-gray-600 hover:bg-gray-100"
                       >
                         +
                       </button>
@@ -69,7 +69,7 @@ export default function Cart() {
                     {/* Remove Button */}
                     <button
                       onClick={() => removeFromCart(item.id)}
-                      className="text-red-500 hover:text-red-700 transition-colors"
+                      className="text-red-500 hover:text-red-700 transition-colors p-1"
                     >
                       <TrashIcon className="w-5 h-5" />
                     </button>

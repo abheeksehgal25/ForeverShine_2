@@ -63,7 +63,7 @@ export default function CarCare() {
               <img src={product.image} alt={product.name} className="w-full h-48 md:h-56 object-cover mb-3 shadow" />
               <span className="text-base md:text-lg font-semibold text-gray-800 mb-1">{product.name}</span>
               <div className="flex items-start justify-between w-full mt-1">
-                <span className="text-sm md:text-base font-bold text-teal-700">{product.price}</span>
+                <span className="text-base md:text-lg font-bold text-teal-700">{product.price}</span>
               </div>
             </Link>
             <button 

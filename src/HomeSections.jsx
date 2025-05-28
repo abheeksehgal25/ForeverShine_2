@@ -116,8 +116,8 @@ export default function HomeSections() {
           <Link 
             key={idx} 
             to={cat.name.includes('Personal') ? '/personal-care' : 
-                cat.name.includes('Car') ? '/car-care' : 
-                cat.name.includes('Home') ? '/home-care' : '/'}
+                cat.name.includes('Home') ? '/home-care' : 
+                cat.name.includes('Car') ? '/car-care' : '/'}
             className="flex flex-col items-center border-2 border-teal-200 rounded-2xl p-4 md:p-6 w-full md:w-64 bg-white shadow-xl hover:shadow-2xl transition-shadow duration-300 ease-in-out transform hover:-translate-y-2 cursor-pointer"
           >
             <img src={cat.icon} alt={cat.name} className="w-32 h-32 md:w-44 md:h-44 mb-4 rounded-xl shadow-md object-contain bg-gradient-to-br from-teal-50 to-white" />
@@ -135,7 +135,7 @@ export default function HomeSections() {
               <img src={prod.image} alt={prod.name} className="w-full h-48 md:h-56 object-cover mb-3 shadow" />
               <span className="text-base md:text-lg font-semibold text-gray-800 mb-1">{prod.name}</span>
               <div className="flex items-start justify-between w-full mt-1">
-                <span className="text-sm md:text-base font-bold text-teal-700">{prod.price}</span>
+                <span className="text-base md:text-lg font-bold text-teal-700">{prod.price}</span>
               </div>
             </Link>
             <button 
@@ -166,7 +166,7 @@ export default function HomeSections() {
               <img src={prod.image} alt={prod.name} className="w-full h-48 md:h-56 object-cover mb-3 shadow" />
               <span className="text-base md:text-lg font-semibold text-gray-800 mb-1">{prod.name}</span>
               <div className="flex items-start justify-between w-full mt-1">
-                <span className="text-sm md:text-base font-bold text-teal-700">{prod.price}</span>
+                <span className="text-base md:text-lg font-bold text-teal-700">{prod.price}</span>
               </div>
             </Link>
             <button 

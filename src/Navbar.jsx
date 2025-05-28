@@ -52,7 +52,7 @@ export default function Navbar() {
         {/* Mobile Menu Button */}
         <button 
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden flex items-center justify-center hover:text-teal-700 hover:bg-teal-200/60 rounded-full p-2 transition-all duration-200 shadow-sm"
+          className="sm:hidden flex items-center justify-center hover:text-teal-700 hover:bg-teal-200/60 rounded-full p-2 transition-all duration-200 shadow-sm"
         >
           <Bars3Icon className="w-6 h-6" />
         </button>
@@ -63,7 +63,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Nav Links */}
-        <ul className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 gap-10 items-center text-gray-800 text-lg font-semibold tracking-wide">
+        <ul className="hidden sm:flex flex-1 justify-center items-center text-gray-800 text-lg font-semibold tracking-wide space-x-6 md:space-x-10">
           <li className="hover:text-teal-700 hover:underline underline-offset-8 transition-all duration-200 cursor-pointer">
             <Link to="/">Categories</Link>
           </li>
@@ -86,7 +86,7 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="absolute top-full left-0 w-full bg-white shadow-lg md:hidden">
+          <div className="absolute top-full left-0 w-full bg-white shadow-lg sm:hidden">
             <ul className="py-2">
               <li className="hover:bg-teal-50">
                 <Link to="/" className="block px-4 py-2 text-gray-800 hover:text-teal-700">Categories</Link>
