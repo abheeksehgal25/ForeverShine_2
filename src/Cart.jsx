@@ -1,10 +1,11 @@
 import React from 'react';
 import { useCart } from './context/CartContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { TrashIcon } from '@heroicons/react/24/outline';
 
 export default function Cart() {
   const { cart, removeFromCart, updateQuantity, getCartTotal } = useCart();
+  const navigate = useNavigate();
 
   if (cart.length === 0) {
     return (
@@ -102,7 +103,10 @@ export default function Cart() {
               </div>
             </div>
 
-            <button className="w-full bg-teal-600 text-white py-3 rounded-full mt-6 hover:bg-teal-700 transition-colors">
+            <button 
+              onClick={() => navigate('/checkout')}
+              className="w-full bg-teal-600 text-white py-3 rounded-full mt-6 hover:bg-teal-700 transition-colors"
+            >
               Proceed to Checkout
             </button>
 

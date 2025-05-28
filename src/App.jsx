@@ -13,6 +13,7 @@ import ProductDetails from './ProductDetails'
 import Cart from './Cart'
 import Account from './Account'
 import SearchResults from './SearchResults'
+import Checkout from './Checkout'
 import { CartProvider } from './context/CartContext'
 import { SearchProvider } from './context/SearchContext'
 import ScrollToTop from './components/ScrollToTop'
@@ -122,6 +123,13 @@ function App() {
               <>
                 <Navbar />
                 <Cart />
+                <Footer />
+              </>
+            } />
+            <Route path="/checkout" element={
+              <>
+                <Navbar />
+                <Checkout />
                 <Footer />
               </>
             } />
