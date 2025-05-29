@@ -3,7 +3,7 @@ import CarCare from './images/Property 1=car.jpg';
 import HomeCare from './images/Property 1=home.jpg';
 import PersonalCare from './images/Property 1=personal.jpg';
 import CarCareMobile from './images/Property 1=car_imresizer.jpg';
-import HomeCareMobile from './images/Property 1=home_imresizer.jpg';
+import HomeCareMobile from './images/home_android.png';
 import PersonalCareMobile from './images/Property 1=personal_imresizer.jpg';
 
 const slides = [
